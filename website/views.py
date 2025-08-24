@@ -18,3 +18,7 @@ def Contact_Us(request):
 
 def About_Us(request):
     return render(request, 'about_us.html')
+
+def Cart(request):
+    return render(request, 'cart.html')
+
