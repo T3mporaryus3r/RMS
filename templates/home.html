@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+  <div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="static/image/theme 1.jpg" class="d-block w-100" alt="Slide Image" style="height: 93vh; object-fit: cover;" />
+
+        <div class="carousel-caption d-none d-md-block" style="
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+      opacity: 1; 
+      padding: 18px 25px; 
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+  ">
+          <h5 style="
+        font-size: 2rem; 
+        font-weight: 700; 
+        color: #fff; 
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8);
+    ">Aesthetic Ambiance</h5>
+          <p style="
+        font-size: 1.1rem; 
+        color: #f8f9fa; 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        margin-bottom: 15px;
+    ">
+            Experience a perfect blend of <em>warmth, elegance, and comfort</em>. Every corner is designed to elevate your dining journey.
+          </p>
+          <a href="/About_Us" class="btn btn-primary" style="
+        font-size: 1rem;
+        opacity: 0.8;
+        padding: 8px 20px;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    ">About Us</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="static/image/food.jpg" class="d-block w-100" alt="Slide Image" style="height: 93vh; object-fit: cover;" />
+
+        <div class="carousel-caption d-none d-md-block" style="
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+      opacity: 0.9; 
+      padding: 18px 25px; 
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+  ">
+          <h5 style="
+        font-size: 2rem; 
+        font-weight: 700; 
+        color: #fff; 
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8);
+    ">Exquisite Culinary Delights</h5>
+          <p style="
+        font-size: 1.1rem; 
+        color: #f8f9fa; 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        margin-bottom: 15px;
+    ">Indulge in dishes crafted with passion, fresh ingredients, and flavors that bring people together.</p>
+          <a href="/Food" class="btn btn-primary" style="
+        font-size: 1rem;
+        opacity: 0.8;
+        padding: 8px 20px;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    ">Food Menu</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="static/image/cocktail.jpg" class="d-block w-100" alt="Slide Image" style="height: 93vh; object-fit: cover;" />
+
+        <div class="carousel-caption d-none d-md-block" style="
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+      opacity: 0.9; 
+      padding: 18px 25px; 
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+  ">
+          <h5 style="
+        font-size: 2rem; 
+        font-weight: 700; 
+        color: #fff; 
+        text-shadow: 1px 2px 6px rgba(0,0,0,0.8);
+    ">Signature Drinks & Cocktails</h5>
+          <p style="
+        font-size: 1.1rem; 
+        color: #f8f9fa; 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        margin-bottom: 15px;
+    ">Refresh your senses with handcrafted beverages, from classic cocktails to unique house specials.</p>
+          <a href="/Drinks" class="btn btn-primary" style="
+        font-size: 1rem;
+        padding: 8px 20px;
+        opacity: 0.8;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    ">Drinks Menu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
