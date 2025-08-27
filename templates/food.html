@@ -1,168 +1,59 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Food Menu{% endblock %} 
+{% block body %} 
+{% load static %}
 
-{% block title %}
+<header class="bg-light text-black py-3">
+  <div class="container">
+    <h1 class="fw-light"><strong>Food Menu</strong></h1>
+    <p class="lead">
+      <strong
+        >Indulge in dishes crafted with passion, fresh ingredients, and flavors
+        that bring people together</strong
+      >
+    </p>
+  </div>
+</header>
 
-{% endblock %}
-
-{% block body %}
-  <header class="bg-light text-black py-3">
+<main> 
+  <div class="album py-5 bg-light">
     <div class="container">
-      <h1 class="fw-light"><strong>Food Menu</strong></h1>
-      <p class="lead">
-        <strong>Indulge in dishes crafted with passion, fresh ingredients, and flavors that bring people together</strong>
-      </p>
-    </div>
-  </header>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for food in foods %}
+        <div class="col">
+          <div class="card shadow-sm">
+           <img
+              src="{{ food.image.url }}"
+              alt="{{ food.name }}"
+              class="img-fluid mb-3"
+              style="max-width: 100%; 
+              height: 300px; 
+              object-fit: cover;"
+            />
 
-  <main>
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <!-- Card 1 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/pizza.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Pizza</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
+            <div class="card-body">
+              <p class="card-text">{{ food.name }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a
+                    href="{% url 'FoodDetailPage' food.id %}"
+                    class="btn btn-sm btn-outline-secondary me-2"
+                  >
+                    View Item
+                  </a>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    Add to cart
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Card 2 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/momo.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">MOMO</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 3 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/frenchfries.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">French Fries</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 4 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/friedchicken.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Fried Chicken</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 5 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/noodles.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Noodles</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 6 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/sandwich.jpg" class="card-img-top" alt="Food 2" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Sandwich</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 7 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/sliders.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Burgers</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 8 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/samosa.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Samosa</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- card 9 -->
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src="static/image/dessert.jpg" class="card-img-top" alt="" height="300px" style="object-fit: cover;" />
-              <div class="card-body">
-                <p class="card-text">Sweets</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">View Item</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-         </div>
-            <div class="container pt-3 pd-2">
-            <p class="float-end">
-                <a href="#"><img src="static/image/arrow.png" alt="Back to top" width="40" height="40" /></a>
-            </p>
-            </div>
-     </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-  </main>
+  </div>
+</main>
 {% endblock %}
-
-
