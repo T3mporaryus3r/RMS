@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render 
 from django.http import JsonResponse
 from .serializers import DrinkSerializer
 from .models import Drink
@@ -7,9 +7,9 @@ from rest_framework import status
 from rest_framework.response import Response    
 
 @api_view(['GET','POST'])
-def DrinkList(request, format=None):
+def DrinksList(request, format=None):
     #get all drinks
-    #serialize them
+    #serialize them 
     #return json response
     if request.method == 'GET':
         drinks = Drink.objects.all()
@@ -24,7 +24,7 @@ def DrinkList(request, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET','PUT','DELETE'])
-def DrinkList_detail(request, id, format=None):
+def DrinksList_detail(request, id, format=None):
     
     try:
         drink = Drink.objects.get(pk=id)

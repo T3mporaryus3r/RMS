@@ -8,4 +8,4 @@ urlpatterns = [
     path('api/food/<int:id>', views.FoodDetail, name = 'FoodDetail')
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+urlpatterns = format_suffix_patterns(urlpatterns) 
