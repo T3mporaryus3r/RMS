@@ -1,6 +1,8 @@
-from django.shortcuts import render, HttpResponse , get_object_or_404
+from django.shortcuts import render, redirect, HttpResponse , get_object_or_404
 from food.models import Food
 from drinks.models import Drink
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 # from datetime import datetime
 # from website.models import Contact
 # from django.contrib import messages
@@ -31,6 +33,4 @@ def Contact_Us(request):
 def About_Us(request):
     return render(request, 'about_us.html')
 
-def Cart(request):
-    return render(request, 'cart.html')
 
