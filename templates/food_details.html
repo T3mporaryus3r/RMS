@@ -1,37 +1,66 @@
-{% extends 'base.html' %} 
-{% block title %}{{ food.name }}{% endblock %} 
+{% extends 'base.html' %} {% block title %}{{ food.name }}{% endblock %} 
+{% block body %} {% load static %}
+<div id="cart-message" style="display:none; position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
 
-{% block body %}
-<div class="container py-5">
-  <div class="row align-items-start">
-    <!-- Left column (Image + buttons) -->
-    <div class="col-md-5 text-center">
-      <img
-        src="{{ food.image.url }}"
-        alt="{{ food.name }}"
-        class="img-fluid mb-3"
-        style="max-width: 100%; height: 500px; border-radius: 10px;
-        object-fit: cover"
-      />
-
-      <div class="d-flex justify-content-center gap-2">
-        <a href="{% url 'FoodListPage' %}" class="btn btn-outline-secondary">
-          Back to Menu
-        </a>
-        <button type="button" class="btn btn-outline-primary">
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ food.image.url }}" alt="{{ food.name }}" class="img-fluid " style="max-width:100%;height:80vh; object-fit: cover;">
+    </div>
+    <div class="col-md-6">
+      <h2>{{ food.name }}</h2>
+      <p class="text-muted">{{ food.description }}</p>
+      <h4 class="text-primary">${{ food.price }}</h4>
+      
+      <div class="mt-4">
+        <button class="btn btn-primary btn-lg add-to-cart-food" data-id="{{ food.id }}">
           Add to Cart
         </button>
+        <a href="{% url 'FoodListPage' %}" class="btn btn-outline-secondary btn-lg ms-2">
+          Back to Food
+        </a>
       </div>
-    </div>
-
-    <!-- Right column (Details) -->
-    <div class="col-md-7">
-      <h1>{{ food.name }}</h1>
-      <p class="text-muted"><strong>Price:</strong> ${{ food.price }}</p>
-      <p>{{ food.description }}</p>
     </div>
   </div>
 </div>
-{% endblock %}
 
+<script>
+document.querySelectorAll('.add-to-cart-food').forEach(button => {
+    button.addEventListener('click', () => {
+        const foodId = button.dataset.id;
+
+        fetch(`/cart/add/food/${foodId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            const msgDiv = document.getElementById('cart-message');
+            if (data.message) {
+                msgDiv.innerText = data.message + " | Items in cart: " + data.cart_unique_items;
+                msgDiv.style.display = 'block';
+                msgDiv.style.background = '#d4edda';
+                msgDiv.style.padding = '10px';
+                msgDiv.style.border = '1px solid #c3e6cb';
+                msgDiv.style.borderRadius = '5px';
+                
+                // Update cart count in navbar
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount) {
+                    cartCount.textContent = data.cart_unique_items;
+                }
+                
+                setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(err => console.error(err));
+    });
+});
+</script>
+{% endblock %}
 {% block footer %}{% endblock %}

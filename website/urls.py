@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from website import views
 
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
     path("Drinks/<int:id>", views.DrinksList_detailPage, name="DrinksList_detailPage"),
     path("Contact_Us", views.Contact_Us, name="Contact_Us"),
     path("About_Us", views.About_Us, name="About_Us"),
-    path("Cart", views.Cart, name="Cart"),
+    path("cart/", include("cart.urls")),
 ]

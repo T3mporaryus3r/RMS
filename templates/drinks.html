@@ -1,17 +1,14 @@
-{% extends "base.html" %} {% block title %} {% endblock title %} 
-{% block body %}
+{% extends 'base.html' %} {% block title %}Drinks Menu{% endblock %} 
+{% block body %} {% load static %}
+<div id="cart-message" style="display:none; position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
 <header class="bg-light text-black py-3">
   <div class="container">
     <h1 class="fw-light"><strong>Drinks Menu</strong></h1>
     <p class="lead">
-      <strong
-        >Refresh your senses with handcrafted beverages, from classic cocktails
-        to unique house specials.</strong
-      >
+      <strong>Refresh your meal with our selection of beverages</strong>
     </p>
   </div>
 </header>
-
 <main>
   <div class="album py-5 bg-light">
     <div class="container">
@@ -21,12 +18,11 @@
           <div class="card shadow-sm">
             <img
               src="{{ drink.image.url }}"
-              class="card-img-top"
               alt="{{ drink.name }}"
-              style="max-width: 100%;
-              height: 300px; 
-              object-fit: cover"
+              class="img-fluid mb-3"
+              style="max-width: 100%; height: 300px; object-fit: cover"
             />
+
             <div class="card-body">
               <p class="card-text">{{ drink.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
@@ -38,8 +34,8 @@
                     View Item
                   </a>
                   <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    type="button" class="btn btn-sm btn-outline-secondary add-to-cart-drink"
+                    data-id="{{ drink.id }}"
                   >
                     Add to cart
                   </button>
@@ -53,4 +49,42 @@
     </div>
   </div>
 </main>
+<script>
+document.querySelectorAll('.add-to-cart-drink').forEach(button => {
+    button.addEventListener('click', () => {
+        const drinkId = button.dataset.id;
+
+        fetch(`/cart/add/drink/${drinkId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            const msgDiv = document.getElementById('cart-message');
+            if (data.message) {
+                msgDiv.innerText = data.message + " | Items in cart: " + data.cart_unique_items;
+                msgDiv.style.display = 'block';
+                msgDiv.style.background = '#d4edda';
+                msgDiv.style.padding = '10px';
+                msgDiv.style.border = '1px solid #c3e6cb';
+                msgDiv.style.borderRadius = '5px';
+                
+                // Update cart count in navbar
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount) {
+                    cartCount.textContent = data.cart_unique_items;
+                }
+                
+                setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(err => console.error(err));
+    });
+});
+</script>
 {% endblock %}

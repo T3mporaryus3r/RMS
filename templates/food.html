@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% block title %}Food Menu{% endblock %} 
-{% block body %} 
-{% load static %}
-
+{% block body %} {% load static %}
+<div
+  id="cart-message"
+  style="display: none; position: fixed; top: 10px; right: 10px; z-index: 1000"
+></div>
 <header class="bg-light text-black py-3">
   <div class="container">
     <h1 class="fw-light"><strong>Food Menu</strong></h1>
@@ -13,21 +15,18 @@
     </p>
   </div>
 </header>
-
-<main> 
+<main>
   <div class="album py-5 bg-light">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for food in foods %}
         <div class="col">
           <div class="card shadow-sm">
-           <img
+            <img
               src="{{ food.image.url }}"
               alt="{{ food.name }}"
               class="img-fluid mb-3"
-              style="max-width: 100%; 
-              height: 300px; 
-              object-fit: cover;"
+              style="max-width: 100%; height: 300px; object-fit: cover"
             />
 
             <div class="card-body">
@@ -42,7 +41,8 @@
                   </a>
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary add-to-cart"
+                    data-id="{{ food.id }}"
                   >
                     Add to cart
                   </button>
@@ -56,4 +56,45 @@
     </div>
   </div>
 </main>
-{% endblock %}
+<script>
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const foodId = button.dataset.id;
+
+      fetch(`/cart/add/food/${foodId}/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const msgDiv = document.getElementById("cart-message");
+          if (data.message) {
+            msgDiv.innerText =
+              data.message + " | Items in cart: " + data.cart_unique_items;  // Changed from data.cart_count
+            msgDiv.style.display = "block";
+            msgDiv.style.background = "#d4edda";
+            msgDiv.style.padding = "10px";
+            msgDiv.style.border = "1px solid #c3e6cb";
+            msgDiv.style.borderRadius = "5px";
+
+            // Update cart count in navbar
+            const cartCount = document.getElementById("cart-count");
+            if (cartCount) {
+              cartCount.textContent = data.cart_unique_items;  // Changed from data.cart_count
+            }
+
+            setTimeout(() => {
+              msgDiv.style.display = "none";
+            }, 3000);
+          } else if (data.error) {
+            alert(data.error);
+          }
+        })
+        .catch((err) => console.error(err));
+    });
+  });
+</script>
+ {% endblock %}

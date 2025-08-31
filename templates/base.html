@@ -16,8 +16,6 @@
       defer
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
     ></script>
-
-
   </head>
   <body>
     <!-- Navigation -->
@@ -40,19 +38,27 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/Food">Foods</a>
+              <a class="nav-link active" aria-current="page" href="/Food"
+                >Foods</a
+              >
             </li>
-
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/Drinks">Drinks</a>
+              <a class="nav-link active" aria-current="page" href="/Drinks"
+                >Drinks</a
+              >
             </li>
-
-               <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/Cart">Cart</a>
-            </li>
-            
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'cart_page' %}"
+              >
+                Cart
+                <span class="badge bg-primary rounded-pill" id="cart-count">
+                  {{ cart_unique_items|default:0 }}
+                </span>
+              </a>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -69,53 +75,86 @@
         </div>
       </div>
     </nav>
-{% block body %} 
-
-{% endblock body %}
-
-{% block footer %}
+    {% block body %} {% endblock body %} {% block footer %}
     <!-- Footer -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<footer class="bg-dark text-white pt-5 pb-3">
-  <div class="container">
-    <div class="row">
-      <!-- About Section -->
-      <div class="col-md-4 mb-4">
-        <h5>🍴 Restaurant</h5>
-        <p>Serving delicious food since 1999. We bring you the best dining experience with love and passion.</p>
-      </div>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <footer class="bg-dark text-white pt-5 pb-3">
+      <div class="container">
+        <div class="row">
+          <!-- About Section -->
+          <div class="col-md-4 mb-4">
+            <h5>🍴 Restaurant</h5>
+            <p>
+              Serving delicious food since 1999. We bring you the best dining
+              experience with love and passion.
+            </p>
+          </div>
 
-      <!-- Quick Links -->
-      <div class="col-md-4 mb-4">
-        <h5>Our Features</h5>
-        <ul class="list-unstyled">
-          <li><a href="/" class="text-white text-decoration-none">Home</a></li>
-          <li><a href="/Food" class="text-white text-decoration-none">Food</a></li>
-          <li><a href="/Drinks" class="text-white text-decoration-none">Drinks</a></li>
-          <li><a href="/Contact_Us" class="text-white text-decoration-none">Contact us</a></li>
-          <li><a href="/About_Us" class="text-white text-decoration-none">About Us</a></li>
-        </ul>
-      </div>
+          <!-- Quick Links -->
+          <div class="col-md-4 mb-4">
+            <h5>Our Features</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="/" class="text-white text-decoration-none">Home</a>
+              </li>
+              <li>
+                <a href="/Food" class="text-white text-decoration-none">Food</a>
+              </li>
+              <li>
+                <a href="/Drinks" class="text-white text-decoration-none"
+                  >Drinks</a
+                >
+              </li>
+              <li>
+                <a href="/Contact_Us" class="text-white text-decoration-none"
+                  >Contact us</a
+                >
+              </li>
+              <li>
+                <a href="/About_Us" class="text-white text-decoration-none"
+                  >About Us</a
+                >
+              </li>
+            </ul>
+          </div>
 
-      <div class="col-md-4 mb-6">
-        <div class="mt-3">
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a></li>
-            <li><a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a></li>
-            <li><a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a></li>
-          </ul>  
+          <div class="col-md-4 mb-6">
+            <div class="mt-3">
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-white me-3"
+                    ><i class="bi bi-instagram fs-4"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="#" class="text-white me-3"
+                    ><i class="bi bi-facebook fs-4"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="#" class="text-white"
+                    ><i class="bi bi-twitter fs-4"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-light" />
+
+        <div class="text-center">
+          <p class="mb-0">&copy; 2025 Restaurant. All Rights Reserved.</p>
         </div>
       </div>
-    </div>
-
-    <hr class="border-light">
-
-    <div class="text-center">
-      <p class="mb-0">&copy; 2025 Restaurant. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
-{% endblock %}
+    </footer>
+    {% endblock %}
   </body>
 </html>
