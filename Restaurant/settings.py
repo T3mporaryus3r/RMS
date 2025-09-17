@@ -133,3 +133,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+KHALTI_SECRET_KEY = "test_secret_key_6f71d97f07df4f3f9cb1d792dd75dc"
+KHALTI_PUBLIC_KEY = "test_public_key_dc74d43fcd5c4fdfa0e5468e7f02b8"
+
+
+ESEWA_MERCHANT_ID = "EPAYTEST"
+

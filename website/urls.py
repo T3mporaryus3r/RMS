@@ -10,5 +10,6 @@ urlpatterns = [
     path("Drinks/<int:id>", views.DrinksList_detailPage, name="DrinksList_detailPage"),
     path("Contact_Us", views.Contact_Us, name="Contact_Us"),
     path("About_Us", views.About_Us, name="About_Us"),
+    path("payments/", include('payments.urls')),
     path("cart/", include("cart.urls")),
 ]

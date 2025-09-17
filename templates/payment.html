@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Payment{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <h2>Payment</h2>
+    <p>Total Amount: <strong>Rs {{ total }}</strong></p>
+
+    <div class="payment-options mt-4">
+        <!-- Khalti Button -->
+        <form id="khalti-form">
+            <button type="button" class="btn btn-outline-primary d-flex align-items-center p-2" 
+                    id="khalti-btn">
+                <img src="/static/image/khalti.png" alt="Khalti" 
+                     style="height:30px; margin-right:10px;">
+                Pay with Khalti
+            </button>
+        </form>
+
+        <!-- eSewa Button -->
+        <form form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST" class="mt-3">
+    <input value="{{ total }}" name="tAmt" type="hidden">
+    <input value="{{ total }}" name="amt" type="hidden">
+    <input value="0" name="psc" type="hidden">  <!-- product service charge -->
+    <input value="0" name="pdc" type="hidden">  <!-- delivery charge -->
+    <input value="{{ ESEWA_MERCHANT_ID }}" name="scd" type="hidden">
+    <input value="OID123456" name="pid" type="hidden">  <!-- unique order id -->
+    <input value="http://127.0.0.1:8000/payments/esewa-success/" type="hidden" name="su">
+    <input value="http://127.0.0.1:8000/payments/esewa-failure/" type="hidden" name="fu">
+    <button type="submit" class="btn btn-outline-success d-flex align-items-center p-2">
+        <img src="/static/image/esewa-logo.jpg" alt="eSewa" 
+             style="height:30px; margin-right:10px;">
+        Pay with eSewa
+    </button>
+</form>
+
+    </div>
+</div>
+
+<!-- Khalti JS Integration -->
+<script src="https://khalti.com/static/khalti-checkout.js"></script>
+<script>
+var config = {
+    "publicKey": "{{ KHALTI_PUBLIC_KEY }}",
+    "productIdentity": "12345",
+    "productName": "Food Cart Payment",
+    "productUrl": "http://127.0.0.1:8000/cart/",
+    "eventHandler": {
+        onSuccess (payload) {
+            fetch("{% url 'khalti_verify' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    alert("Payment Successful!");
+                    window.location.href = "/";  // redirect after payment
+                } else {
+                    alert("Payment Verification Failed!");
+                }
+            });
+        },
+        onError (error) {
+            console.log(error);
+            alert("Payment Failed!");
+        },
+        onClose () {
+            console.log("Widget closed");
+        }
+    },
+    "amount": {{ total|floatformat:0 }} * 100
+};
+
+var checkout = new KhaltiCheckout(config);
+document.getElementById("khalti-btn").onclick = function () {
+    checkout.show({amount: {{ total|floatformat:0 }} * 100});
+}
+</script>
+{% endblock %}
