@@ -1,48 +1,9 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from .serializers import OrdersSerializer
-from .models import Orders
-from rest_framework.decorators import api_view
-from rest_framework import status
-from rest_framework.response import Response 
+from .models import Order
 
-# Create your views here.
-@api_view(['GET','POST'])
-def OrdersList(request, format=None):
-    #get all order
-    #serialize them
-    #return json response
-    if request.method == 'GET':
-        orders = Orders.objects.all()
-        serializer = OrdersSerializer(orders, many=True)
-        return Response(serializer.data)
-
-    if request.method == 'POST':
-        serializer = OrdersSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-@api_view(['GET','PUT','DELETE'])
-def OrdersDetail(request, id, format=None):
-    
-    try:
-        order = Orders.objects.get(pk=id)
-    except Orders.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
-        serializer = OrdersSerializer(order)
-        return Response(serializer.data)
-    
-    elif request.method == 'PUT':
-        serializer = OrdersSerializer(order, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        order.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+def my_orders(request):
+    if request.user.is_authenticated:
+        orders = Order.objects.filter(user=request.user)
+    else:
+        orders = Order.objects.filter(session_id=request.session.session_key)
+    return render(request, "my_orders.html", {"orders": orders})

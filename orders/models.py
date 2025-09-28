@@ -1,11 +1,13 @@
+# orders/models.py
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-class Orders(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=500)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.IntegerField()
-    
-    def __str__(self):
-        return self.name
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    session_id = models.CharField(max_length=255, blank=True, null=True)
+    items = models.TextField()
+    total_amount = models.FloatField()
+    payment_method = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+    transaction_id = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)

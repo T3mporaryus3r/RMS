@@ -12,4 +12,5 @@ urlpatterns = [
     path("About_Us", views.About_Us, name="About_Us"),
     path("payments/", include('payments.urls')),
     path("cart/", include("cart.urls")),
+    path("orders/", include("orders.urls")),
 ]
